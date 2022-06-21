@@ -47,3 +47,21 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS letras;
+DROP TABLE IF EXISTS resultados;
+
+CREATE TABLE resultados(letra1 STRING, suma INT);
+INSERT OVERWRITE TABLE resultados
+SELECT
+        c2,
+        sum(m.val)
+FROM
+        tbl0
+LATERAL VIEW
+        explode(c6) m AS key, val
+GROUP BY c2;
+
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM resultados;

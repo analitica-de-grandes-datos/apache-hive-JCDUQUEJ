@@ -45,3 +45,36 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+
+DROP TABLE IF EXISTS resultados;
+DROP TABLE IF EXISTS letras;
+
+CREATE TABLE letras (clave STRING, letra STRING);
+CREATE TABLE resultados (clave1 STRING, letra1 STRING, cuenta1 INT);
+
+INSERT OVERWRITE TABLE letras
+SELECT
+        YEAR(c4) AS YEAR,
+        c7
+FROM
+        tbl0
+LATERAL VIEW
+    explode(c5) tbl0 AS c7;
+
+INSERT OVERWRITE TABLE resultados
+SELECT
+        clave,
+        letra,
+        count(letra)
+FROM
+        letras
+GROUP BY
+        clave,
+        letra
+ORDER BY
+        clave,
+        letra;
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM resultados;

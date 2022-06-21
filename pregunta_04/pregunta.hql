@@ -44,3 +44,23 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 /*
     >>> Escriba su respuesta a partir de este punto <<<
 */
+
+
+DROP TABLE IF EXISTS letras;
+CREATE TABLE letras (letra STRING);
+INSERT OVERWRITE TABLE letras
+SELECT
+    explode(c5)
+FROM
+    tbl0;
+
+SELECT DISTINCT
+        letra
+FROM
+        letras
+ORDER BY
+        letra;
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM letras;

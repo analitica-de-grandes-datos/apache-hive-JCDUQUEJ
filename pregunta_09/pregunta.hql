@@ -46,3 +46,30 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS resultados;
+CREATE TABLE resultados(posicion STRING, letra STRING, valor INT);
+INSERT OVERWRITE TABLE resultados
+
+INSERT
+SELECT
+        d.c1,
+        d.c2,
+        t.c6
+FROM
+        tbl0 d
+JOIN (
+        SELECT
+                c1,
+                m.key AS c5,
+                m.val AS c6
+        FROM
+                tbl1
+        LATERAL VIEW
+                explode(c4) m AS key, val
+        ) t
+ON (d.c1 = t.c1 AND d.c2 = t.c5)
+
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM resultados;
