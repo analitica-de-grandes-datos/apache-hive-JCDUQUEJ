@@ -42,7 +42,8 @@ FROM
         datos
 ORDER BY
         letra,
-        numero;
+        numero,
+        fecha;
 
 INSERT OVERWRITE DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','

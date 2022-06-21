@@ -49,8 +49,6 @@ LOAD DATA LOCAL INPATH 'data1.csv' INTO TABLE tbl1;
 DROP TABLE IF EXISTS resultados;
 CREATE TABLE resultados(posicion STRING, letra STRING, valor INT);
 INSERT OVERWRITE TABLE resultados
-
-INSERT
 SELECT
         d.c1,
         d.c2,
