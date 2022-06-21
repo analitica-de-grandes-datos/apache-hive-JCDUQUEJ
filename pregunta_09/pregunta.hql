@@ -65,8 +65,7 @@ JOIN (
         LATERAL VIEW
                 explode(c4) m AS key, val
         ) t
-ON (d.c1 = t.c1 AND d.c2 = t.c5)
-
+ON (d.c1 = t.c1 AND d.c2 = t.c5);
 
 INSERT OVERWRITE DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
