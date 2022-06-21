@@ -30,3 +30,18 @@ LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
     >>> Escriba su respuesta a partir de este punto <<<
 */
 
+DROP TABLE IF EXISTS resultados;
+CREATE TABLE resultados(letra1 STRING, suma INT);
+INSERT OVERWRITE TABLE resultados
+SELECT
+        m.key,
+        count(m.key)
+FROM
+        t0
+LATERAL VIEW
+        explode(c3) m AS key, val
+GROUP BY m.key;
+
+INSERT OVERWRITE DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
+SELECT * FROM resultados;
