@@ -61,7 +61,6 @@ GROUP BY
         letra,
         resultados1.key;
 
-
-INSERT OVERWRITE LOCAL DIRECTORY './output'
+INSERT OVERWRITE DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM resultados;
