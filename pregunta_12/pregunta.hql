@@ -61,6 +61,7 @@ GROUP BY
         letra,
         n.key;
 
+
 INSERT OVERWRITE DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM resultados;
