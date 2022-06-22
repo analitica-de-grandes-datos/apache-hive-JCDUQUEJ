@@ -46,7 +46,7 @@ LATERAL VIEW
         explode(c2) m AS clave1;
 
 DROP TABLE IF EXISTS resultados;
-CREATE TABLE resultados (letra STRING, clave STRING, cuenta INT);
+CREATE TABLE resultados (letra1 STRING, clave1 STRING, cuenta INT);
 
 INSERT OVERWRITE TABLE resultados
 SELECT
