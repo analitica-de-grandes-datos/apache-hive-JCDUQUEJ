@@ -58,28 +58,16 @@ FROM
 LATERAL VIEW
         explode(c5) m AS c7;
 
-DROP TABLE IF EXISTS letras1;
-CREATE TABLE letras1 (numero INT, valores STRING);
-INSERT OVERWRITE TABLE letras1
-SELECT
-        linea,
-        letra
-FROM
-        letras
-ORDER BY
-        linea,
-        letra;
-
 DROP TABLE IF EXISTS resultados;
 CREATE TABLE resultados (letra1 STRING);
 
 INSERT OVERWRITE TABLE resultados
 SELECT
-        concat_ws(':', collect_set(valores))
+        concat_ws(':', collect_set(letra))
 FROM
-        letras1
+        letras
 GROUP BY
-        numero;
+        linea;
 
 INSERT OVERWRITE DIRECTORY './output'
 ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
