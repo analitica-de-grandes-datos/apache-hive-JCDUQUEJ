@@ -8,7 +8,7 @@ columna 2 y clave de la columna 3; esto es, por ejemplo, la cantidad de
 registros en tienen la letra `a` en la columna 2 y la clave `aaa` en la 
 columna 3 es:
 
-a    aaa    5
+    a    aaa    5
 
 Apache Hive se ejecutará en modo local (sin HDFS).
 
@@ -23,11 +23,11 @@ CREATE TABLE t0 (
     c3 MAP<STRING, INT>
     )
     ROW FORMAT DELIMITED 
-        FIELDS TERMINATED BY "\t"
-        COLLECTION ITEMS TERMINATED BY ","
-        MAP KEYS TERMINATED BY "#"
-        LINES TERMINATED BY "\n";
-LOAD DATA LOCAL INPATH "data.tsv" INTO TABLE t0;
+        FIELDS TERMINATED BY '\t'
+        COLLECTION ITEMS TERMINATED BY ','
+        MAP KEYS TERMINATED BY '#'
+        LINES TERMINATED BY '\n';
+LOAD DATA LOCAL INPATH 'data.tsv' INTO TABLE t0;
 
 /*
     >>> Escriba su respuesta a partir de este punto <<<
@@ -51,17 +51,17 @@ CREATE TABLE resultados (letra STRING, clave STRING, cuenta INT);
 INSERT OVERWRITE TABLE resultados
 SELECT
         letra,
-        n.key,
+        resultados1.key,
         count(*)
 FROM
         resultados1
 LATERAL VIEW
-        explode(clave) n AS key, value
+        explode(clave) resultados1 AS key, value
 GROUP BY
         letra,
-        n.key;
+        resultados1.key;
 
 
-INSERT OVERWRITE LOCAL DIRECTORY "./output"
-ROW FORMAT DELIMITED FIELDS TERMINATED BY ","
+INSERT OVERWRITE LOCAL DIRECTORY './output'
+ROW FORMAT DELIMITED FIELDS TERMINATED BY ','
 SELECT * FROM resultados;
