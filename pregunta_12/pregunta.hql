@@ -52,7 +52,7 @@ INSERT OVERWRITE TABLE resultados
 SELECT
         letra,
         resultados1.key,
-        count(*)
+        count(*) AS cnt
 FROM
         resultados1
 LATERAL VIEW
